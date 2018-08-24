@@ -1,12 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
+#include<stdio.h>
+#include<stdlib.h>
 
 #define MAXNUMVERTICES  100
 #define MAXNUMARESTAS   100
-#define FALSE           0
 #define TRUE            1
-#define INFINITO        INT_MAX
+#define FALSE           0
 
 typedef int TipoValorVertice;
 
@@ -25,36 +23,31 @@ typedef struct TipoLista {
     TipoApontador Primeiro, Ultimo;
 }TipoLista;
 
-typedef struct TipoFila {
-    TipoApontador Frente, Tras;
-}TipoFila;
-
 typedef struct TipoGrafo {
     TipoLista Adj[MAXNUMVERTICES + 1];
     int NumVertices;
     int NumArestas;
 }TipoGrafo;
 
-typedef short  TipoValorTempo;
+typedef short TipoValorTempo;
 
 typedef enum {
     branco, cinza, preto
 }TipoCor;
 
-int i;
-short FimListaAdj;
+short i;
+int FimListaAdj;
 TipoValorVertice Adj;
 TipoGrafo Grafo;
 TipoItem x;
 
-/*--Entram aqui os operadores do Programa 2.4--*/
 void FLVazia(TipoLista *Lista){
     Lista->Primeiro = (TipoApontador)malloc(sizeof(TipoCelula));
     Lista->Ultimo = Lista->Primeiro;
     Lista->Primeiro->Prox = NULL;
 }
 
-short ListaVazia(TipoLista Lista){
+char Vazia(TipoLista Lista){
     return (Lista.Primeiro == Lista.Ultimo);
 }
 
@@ -65,44 +58,6 @@ void Insere(TipoItem *x, TipoLista *Lista){
     Lista->Ultimo->Prox = NULL;
 }
 
- void FFVazia(TipoFila *Fila){
-    Fila->Frente = (TipoApontador)malloc(sizeof(TipoCelula));
-    Fila->Tras = Fila->Frente;
-    Fila->Frente->Prox = NULL;
-}
-
-short FilaVazia(TipoFila Fila){
-    return (Fila.Frente == Fila.Tras);
-}
-
-void Enfileira(TipoItem x, TipoFila *Fila){
-    Fila->Tras->Prox =(TipoApontador)malloc(sizeof(TipoCelula));
-    Fila->Tras = Fila->Tras->Prox;
-    Fila->Tras->Item = x;
-    Fila->Tras->Prox = NULL;
-}
-
-void Desenfileira(TipoFila *Fila, TipoItem *Item){
-    TipoApontador q;
-    if (FilaVazia(*Fila)){
-        printf(" Erro   fila esta  vazia\n");
-        return;
-    }
-    q = Fila->Frente;
-    Fila->Frente = Fila->Frente->Prox;
-    *Item = Fila->Frente->Item;
-    free(q);
-}
-
-void ImprimeFila(TipoFila Fila){
-    TipoApontador Aux;
-    Aux = Fila.Frente->Prox;
-    while (Aux != NULL){
-        printf("%3d ", Aux->Item.Vertice);
-        Aux = Aux->Prox;
-    }
-}
-
 void InsereAresta(TipoValorVertice *V1, TipoValorVertice *V2, TipoGrafo *Grafo){
     TipoItem x;
     x.Vertice = *V2;
@@ -111,13 +66,13 @@ void InsereAresta(TipoValorVertice *V1, TipoValorVertice *V2, TipoGrafo *Grafo){
 
 void FGVazio(TipoGrafo *Grafo){
     short i;
-    for (i = 0; i <= Grafo->NumVertices - 1; i++)
+    for (i = 0; i <= Grafo->NumVertices; i++)
         FLVazia(&Grafo->Adj[i]);
 }
 
-short ExisteAresta(TipoValorVertice Vertice1, TipoValorVertice Vertice2, TipoGrafo *Grafo){
+char ExisteAresta(TipoValorVertice Vertice1, TipoValorVertice Vertice2, TipoGrafo *Grafo){
     TipoApontador Aux;
-    short EncontrouAresta = FALSE;
+    char EncontrouAresta = FALSE;
     Aux = Grafo->Adj[Vertice1].Primeiro->Prox;
     while (Aux != NULL && EncontrouAresta == FALSE){
         if (Vertice2 == Aux->Item.Vertice)
@@ -127,7 +82,7 @@ short ExisteAresta(TipoValorVertice Vertice1, TipoValorVertice Vertice2, TipoGra
     return EncontrouAresta;
 }
 
-short ListaAdjVazia(TipoValorVertice *Vertice, TipoGrafo *Grafo){
+char ListaAdjVazia(TipoValorVertice *Vertice, TipoGrafo *Grafo){
     return (Grafo->Adj[*Vertice].Primeiro == Grafo->Adj[*Vertice].Ultimo);
 }
 
@@ -135,130 +90,121 @@ TipoApontador PrimeiroListaAdj(TipoValorVertice *Vertice, TipoGrafo *Grafo){
     return (Grafo->Adj[*Vertice].Primeiro->Prox);
 }
 
-void ProxAdj(TipoValorVertice *Vertice, TipoValorVertice *Adj, TipoApontador* Prox, short *FimListaAdj){
+void ProxAdj(TipoValorVertice *Vertice, TipoValorVertice *Adj,
+             TipoApontador *Prox, char *FimListaAdj){
     *Adj = (*Prox)->Item.Vertice;
     *Prox = (*Prox)->Prox;
     if (*Prox == NULL)
-    *FimListaAdj = TRUE;
+        *FimListaAdj = TRUE;
 }
 
 void ImprimeLista(TipoLista Lista){
     TipoApontador Aux;
     Aux = Lista.Primeiro->Prox;
     while (Aux != NULL){
-        printf("%d ", Aux->Item.Vertice);
+        printf("%3d ", Aux->Item.Vertice);
         Aux = Aux->Prox;
     }
 }
 
 void ImprimeGrafo(TipoGrafo *Grafo){
-    int i;
-    for (i = 0; i <= Grafo->NumVertices - 1; i++){
-    printf("Vertice %2d: ", i);
-    if (!ListaVazia(Grafo->Adj[i]))
-        ImprimeLista(Grafo->Adj[i]);
-    putchar('\n');
+    short i;
+    for (i = 1; i <= Grafo->NumVertices; i++){
+        printf("Vertice%2d:", i);
+        if (!Vazia(Grafo->Adj[i]))
+            ImprimeLista(Grafo->Adj[i]);
+        putchar('\n');
     }
 }
 
-void VisitaBfs(TipoValorVertice u, TipoGrafo *Grafo, int *Dist, TipoCor *Cor, int *Antecessor){
-    TipoValorVertice v;
-    TipoApontador Aux;
-    short FimListaAdj;
+void VisitaDfs(TipoValorVertice u, TipoGrafo *Grafo, TipoValorTempo* Tempo,
+               TipoValorTempo* d, TipoValorTempo* t, TipoCor* Cor, short* Antecessor){
 
-    TipoItem Item;
-    TipoFila Fila;
+    char FimListaAdj;
+
+    TipoApontador Aux;
+    TipoValorVertice v;
 
     Cor[u] = cinza;
-    Dist[u] = 0;
+    (*Tempo)++;
+    d[u] = (*Tempo);
 
-    FFVazia(&Fila);
-    Item.Vertice = u;
-    Enfileira(Item, &Fila);
-    printf("Visita origem%2d cor: cinza F:", u);
-    ImprimeFila(Fila);
-    getchar();
-
-    while (!FilaVazia(Fila)){
-        Desenfileira(&Fila, &Item);
-        u = Item.Vertice;
-        if (!ListaAdjVazia(&u, Grafo)){
-            Aux = PrimeiroListaAdj(&u, Grafo);
-            FimListaAdj = FALSE;
-            while (FimListaAdj == FALSE){
-                ProxAdj(&u, &v, &Aux, &FimListaAdj);
-                if (Cor[v] != branco) continue;
-
-                Cor[v] = cinza; Dist[v] = Dist[u] + 1;
+    if (!ListaAdjVazia(&u, Grafo)){
+        Aux = PrimeiroListaAdj(&u, Grafo);
+        FimListaAdj = FALSE;
+        while (!FimListaAdj){
+            ProxAdj(&u, &v, &Aux, &FimListaAdj);
+            if (Cor[v] == branco){
                 Antecessor[v] = u;
-                Item.Vertice = v;
-                Enfileira(Item, &Fila);
+                VisitaDfs(v, Grafo, Tempo, d, t, Cor, Antecessor);
             }
         }
-        Cor[u] = preto;
-        printf("Visita%2d Dist%2d cor: preto F:", u, Dist[u]);
-        ImprimeFila(Fila); getchar();
     }
+
+    Cor[u] = preto;
+    (*Tempo)++;
+    t[u] = (*Tempo);
 }
 
-void BuscaEmLargura(TipoGrafo *Grafo){
+void EscreveSaida(TipoGrafo *grafo, TipoValorTempo d[MAXNUMVERTICES + 1],
+                  TipoValorTempo t[MAXNUMVERTICES + 1], short antecessor[MAXNUMVERTICES+1]){
+
+    printf("Vertice | Pai | Tempo Descoberta | Tempo Finalização\n");
+    int j;
+    for (j = 1; j <= grafo->NumVertices; j++)
+        printf("%d | %d | %d | %d\n",j,antecessor[j],d[j],t[j]);
+}
+
+void BuscaEmProfundidade(TipoGrafo *Grafo){
     TipoValorVertice x;
-    int Dist[MAXNUMVERTICES + 1];
-    TipoCor Cor[MAXNUMVERTICES + 1];
-    int Antecessor[MAXNUMVERTICES + 1];
-    for (x = 0; x <= Grafo->NumVertices - 1; x++){
+    TipoValorTempo Tempo;
+    TipoValorTempo d[MAXNUMVERTICES + 1], t[MAXNUMVERTICES + 1];
+
+    TipoCor Cor[MAXNUMVERTICES+1];
+    short Antecessor[MAXNUMVERTICES+1];
+
+    Tempo = 0;
+    for (x = 0; x <= Grafo->NumVertices; x++){
         Cor[x] = branco;
-        Dist[x] = INFINITO;
         Antecessor[x] = -1;
     }
-    for (x = 0; x <= Grafo->NumVertices - 1; x++){
+    for (x = 1; x <= Grafo->NumVertices; x++){
         if (Cor[x] == branco)
-            VisitaBfs(x, Grafo, Dist, Cor, Antecessor);
+            VisitaDfs(x, Grafo, &Tempo, d, t, Cor, Antecessor);
     }
+
+    EscreveSaida(Grafo,d,t,Antecessor);
 }
 
-int main(int argc, char *argv[]){
+int main(int argc, char **argv){
 
-    FILE* entrada = fopen("Entrada","rt");
-    FILE* saida = fopen("Saida","rt");
+    FILE* entrada = fopen("Entrada.txt","rt");
 
-    int NVertices;
-    int NArestas;
+    int vertices = 0;
+    int arestas;
 
-    fscanf(entrada,"%d\n%d\n",&NVertices,&NArestas);
+    fscanf(entrada,"%d\n%d\n",&vertices,&arestas);
 
-    /*
-    printf("No. vertices:");
-    scanf("%d%*[^\n]", &NVertices);
-    printf("No. arestas:");
-    scanf("%d%*[^\n]", &NArestas);
-    */
-
-    Grafo.NumVertices = NVertices;
+    Grafo.NumVertices = vertices;
     Grafo.NumArestas = 0;
     FGVazio(&Grafo);
 
     TipoValorVertice V1, V2;
 
-    for (i = 0; i <= NArestas - 1; i++){
-        printf("Insere V1 -- V2 -- Peso:");
+    for (i = 0; i < arestas; i++){
 
-        fscanf(entrada,"%d %d",&V1,&V2);
+        fscanf(entrada,"%d %d\n",&V1,&V2);
 
-        /*
-        scanf("%d*[^\n]", &V1);
-        scanf("%d*[^\n]", &V2);
-        */
-
-        getchar();
         Grafo.NumArestas++;
-        InsereAresta(&V1, &V2, &Grafo);   /*1 chamada : G direcionado*/
-        InsereAresta(&V2, &V1, &Grafo);   /*2 chamadas: G nao-direcionado*/
+        InsereAresta(&V1, &V2, &Grafo);
+        if(V1 != V2)
+            InsereAresta(&V2, &V1, &Grafo);
     }
 
-    ImprimeGrafo(&Grafo);
-    getchar();
-    BuscaEmLargura(&Grafo);
-    getchar();
+    fclose(entrada);
+
+    //ImprimeGrafo(&Grafo);
+    BuscaEmProfundidade(&Grafo);
+
     return 0;
 }
