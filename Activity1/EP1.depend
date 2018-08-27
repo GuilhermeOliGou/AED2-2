@@ -1,0 +1,90 @@
+# depslib dependency file v1.0
+1525603794 source:c:\users\casa\desktop\ep1\main.c
+	<stdio.h>
+	<stdlib.h>
+
+1525568256 source:c:\users\casa\downloads\grafo_listaadj.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+
+1525705605 source:c:\users\casa\desktop\ep1\grafo_listaadj.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+
+1525656175 source:c:\users\casa\desktop\ep1\heap_binario.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<math.h>
+
+1525961916 source:c:\users\administrador\desktop\aed_2-ep_1\grafo_listaadj.c
+	<stdlib.h>
+	<stdbool.h>
+	"grafo_listaadj.h"
+
+1525961520 c:\users\administrador\desktop\aed_2-ep_1\grafo_listaadj.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+
+1525967884 source:c:\users\administrador\desktop\aed_2-ep_1\heap_binario.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<math.h>
+	"heap_binario.h"
+
+1525961520 source:c:\users\administrador\desktop\aed_2-ep_1\main.c
+	<stdio.h>
+	<stdlib.h>
+
+1525967930 c:\users\administrador\desktop\aed_2-ep_1\heap_binario.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<math.h>
+
+1525967884 source:c:\users\administrador\desktop\aed_2-ep_1\dijkstra.c
+	<stdio.h>
+	<stdlib.h>
+	"heap_binario.h"
+	"grafo_listaadj.h"
+
+1526085152 source:c:\users\casa\desktop\aed_2-ep_1\grafo_listaadj.c
+	<stdlib.h>
+	<stdbool.h>
+	"grafo_listaadj.h"
+
+1526011046 c:\users\casa\desktop\aed_2-ep_1\grafo_listaadj.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+
+1526093288 source:c:\users\casa\desktop\aed_2-ep_1\heap_binario.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<math.h>
+	"heap_binario.h"
+
+1526091960 c:\users\casa\desktop\aed_2-ep_1\heap_binario.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<math.h>
+
+1526091619 source:c:\users\casa\desktop\aed_2-ep_1\dijkstra.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	"heap_binario.h"
+	"grafo_listaadj.h"
+
+1525440882 source:c:\users\casa\downloads\exemplodbl_max.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<float.h>
+
