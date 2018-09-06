@@ -123,6 +123,8 @@ void insereAresta(int v1, int v2, TipoPeso peso, TipoGrafo *grafo){
     novo->prox = atual;
     grafo->listaAdj[v1] = novo;
     grafo->numArestas = grafo->numArestas + 1;
+
+    printf("Aresta inserida com sucesso!\n");
 }
 
 TipoPeso obtemPesoAresta(int v1, int v2, TipoGrafo *grafo){

@@ -111,3 +111,33 @@
 	<stdbool.h>
 	<math.h>
 
+1536254490 source:c:\users\pet1\desktop\aed2-2\activity1\dijkstra.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	"heap_binario.h"
+	"grafo_listaadj.h"
+
+1536253305 c:\users\pet1\desktop\aed2-2\activity1\heap_binario.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<math.h>
+
+1536253305 c:\users\pet1\desktop\aed2-2\activity1\grafo_listaadj.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+
+1536253497 source:c:\users\pet1\desktop\aed2-2\activity1\grafo_listaadj.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	"grafo_listaadj.h"
+
+1536253305 source:c:\users\pet1\desktop\aed2-2\activity1\heap_binario.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	"heap_binario.h"
+

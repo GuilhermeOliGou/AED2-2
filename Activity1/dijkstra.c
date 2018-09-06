@@ -88,6 +88,7 @@ bool inicializaMatriz(double*** matriz, int nv){
             *matriz[i][j] = 0;
         }
     }
+    return true;
 }
 
 bool recebeEntrada (TipoGrafo* grafo, FILE* entrada, double*** matriz){
@@ -148,15 +149,15 @@ void printaDistancias (double*** matriz, FILE* saida, int nv){
 
     for (i = 1; i <= nv; i++){
         for (j = 1; j < nv; j++){
-            fprintf(saida,"%.2e | ",*matriz[i][j]);
+            printf(saida,"%.2e | ",*matriz[i][j]);
         }
-        fprintf(saida,"%.2e\n",*matriz[i][j]);
+        printf(saida,"%.2e\n",*matriz[i][j]);
     }
 }
 
 int main(int argc, char** argv){
-    FILE* entrada = fopen(/*argv[1]*/"entrada_teste1","rt");
-    FILE* saida = fopen("saida","rt");
+    FILE* entrada = fopen("entrada.txt","rt");
+    FILE* saida = fopen("saida.txt","rt");
 
     double** matriz;
 
@@ -165,6 +166,8 @@ int main(int argc, char** argv){
     if (recebeEntrada(&grafo,entrada,&matriz)){
         int i;
         int nv = obtemNrVertices(&grafo);
+
+        fclose(entrada);
 
         for(i = 1; i <= nv; i++){
             escreveSaida(&grafo,i,&matriz);
