@@ -88,3 +88,26 @@
 	<stdbool.h>
 	<float.h>
 
+1536248723 source:c:\users\casa\desktop\aed2-2\activity1\grafo_listaadj.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	"grafo_listaadj.h"
+
+1536248724 c:\users\casa\desktop\aed2-2\activity1\grafo_listaadj.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+
+1536243331 source:c:\users\casa\desktop\aed2-2\activity1\heap_binario.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	"heap_binario.h"
+
+1536248815 c:\users\casa\desktop\aed2-2\activity1\heap_binario.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<math.h>
+

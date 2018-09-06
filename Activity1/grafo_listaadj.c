@@ -1,7 +1,12 @@
-﻿#include <stdio.h>
-#include <stdlib.h>
+﻿/*
+    Nome: Guilherme Oliveira Goularte
+    n°USP: 10387748
+*/
 
+#include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
+
 #include "grafo_listaadj.h"
 
 #define VN -1

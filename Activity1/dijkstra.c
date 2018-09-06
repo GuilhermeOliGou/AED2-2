@@ -1,3 +1,8 @@
+/*
+    Nome: Guilherme Oliveira Goularte
+    n°USP: 10387748
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -150,8 +155,8 @@ void printaDistancias (double*** matriz, FILE* saida, int nv){
 }
 
 int main(int argc, char** argv){
-    FILE* entrada = fopen(argv[1],"rt");
-    FILE* saida = fopen(argv[2],"rt");
+    FILE* entrada = fopen(/*argv[1]*/"entrada_teste1","rt");
+    FILE* saida = fopen("saida","rt");
 
     double** matriz;
 

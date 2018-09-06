@@ -1,16 +1,7 @@
-/************************************
-	ACH2024 - Algoritmos e Estruturas de Dados II
-
-	Implementacao de Grafos utilizando Listas de Adjacencia
-	(vetor de ponteiros no qual cada posicao indexa um vertice e
-	 contem o ponteiro para a sua lista de adjacencia)
-
-*************************************/
-
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <stdbool.h>   /* variaveis bool assumem valores "true" ou "false" */
+#include <stdbool.h>
 
 #define VN -1  /* numero de vertice invalido ou ausente */
 #define AN NULL                /* aresta nula */
