@@ -1,3 +1,9 @@
+/*
+    grafo_listaadj.h
+    Nome: Guilherme Oliveira Goularte
+    n°USP: 10387748
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 

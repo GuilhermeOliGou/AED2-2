@@ -1,4 +1,5 @@
 /*
+    dijkstra.c
     Nome: Guilherme Oliveira Goularte
     n°USP: 10387748
 */
@@ -11,6 +12,12 @@
 #include "grafo_listaadj.h"
 
 #define DBL_MAX 2147483647
+#define CAMINHO_INEXISTENTE -1
+
+typedef struct s{
+    double** matriz;
+    int numVertices;
+}MatrizDeDistancias;
 
 void relaxamentos (TipoGrafo* grafo, HeapBinario* heap, int indice, int* anterior){
     if (indice <= 0){
@@ -25,10 +32,8 @@ void relaxamentos (TipoGrafo* grafo, HeapBinario* heap, int indice, int* anterio
     double novoPeso;
     int vDestino;
     while (arestaAtual){
-        printHeap(heap);
         novoPeso = retornaDistancia(heap,indice)+obtemPesoInstantaneo(arestaAtual);
         vDestino = verticeDestino(arestaAtual,grafo);
-        printf("%lf + %lf < %lf\n",retornaDistancia(heap,indice),obtemPesoInstantaneo(arestaAtual), retornaDistancia(heap,vDestino));
         if (novoPeso < retornaDistancia(heap,vDestino)){
             alteraElemento(heap,vDestino,novoPeso);
             anterior[verticeDestino(arestaAtual,grafo)] = indice;
@@ -73,25 +78,32 @@ bool dijkstra (TipoGrafo* grafo, int tamanhoGrafo, int s, double* distancias, in
     return true;
 }
 
-bool inicializaMatriz(double*** matriz, int nv){
+bool inicializaMatriz(MatrizDeDistancias* matriz, int nv){
     int i,j;
-
-    *matriz = (double**) calloc(nv+1,sizeof(double*));
-
-    if(!matriz){
+    double** novo = (double**) calloc(nv+1,sizeof(double*));
+    if(!novo){
         printf("Sem espaço na memória para a nova matriz!\n");
         return false;
     }
-
-    for (i = 1; i <= nv; i++){
-        for (j = 1; j <= nv; j++){
-            *matriz[i][j] = 0;
+    for(i = 0; i <= nv; i++){
+        double* linha = (double*) calloc(nv+1,sizeof(double));
+        if(!linha){
+            printf("Sem espaço na memória para a nova matriz!\n");
+            return false;
+        }
+        novo[i] = linha;
+    }
+    for (i = 0; i <= nv; i++){
+        for (j = 0; j <= nv; j++){
+            novo[i][j] = 0;
         }
     }
+    matriz->matriz = novo;
+    matriz->numVertices = nv;
     return true;
 }
 
-bool recebeEntrada (TipoGrafo* grafo, FILE* entrada, double*** matriz){
+bool recebeEntrada (TipoGrafo* grafo, FILE* entrada, MatrizDeDistancias* matriz){
     int nv, na;
     fscanf(entrada,"%d %d\n",&nv,&na);
 
@@ -118,7 +130,7 @@ bool recebeEntrada (TipoGrafo* grafo, FILE* entrada, double*** matriz){
     return true;
 }
 
-void escreveSaida (TipoGrafo* grafo, int s, double*** saida){
+void escreveSaida (TipoGrafo* grafo, int s, MatrizDeDistancias* saida){
     int i;
     int tamanhoGrafo = obtemNrVertices(grafo);
     double* distancias = (double*)calloc(tamanhoGrafo+1, sizeof(double));
@@ -137,29 +149,29 @@ void escreveSaida (TipoGrafo* grafo, int s, double*** saida){
     }
     for (i = 1; i <= tamanhoGrafo; i++){
         if (distancias[i] == DBL_MAX){
-            *saida[s][i] = DBL_MAX;
+            saida->matriz[s][i] = CAMINHO_INEXISTENTE;
         }else{
-            *saida[s][i] = distancias[i];
+            saida->matriz[s][i] = distancias[i];
         }
     }
 }
 
-void printaDistancias (double*** matriz, FILE* saida, int nv){
+void printaDistancias (MatrizDeDistancias* matriz, FILE* saida, int nv){
     int i,j;
 
     for (i = 1; i <= nv; i++){
         for (j = 1; j < nv; j++){
-            printf(saida,"%.2e | ",*matriz[i][j]);
+            fprintf(saida,"%g | ",matriz->matriz[i][j]);
         }
-        printf(saida,"%.2e\n",*matriz[i][j]);
+        fprintf(saida,"%g\n",matriz->matriz[i][j]);
     }
 }
 
 int main(int argc, char** argv){
     FILE* entrada = fopen("entrada.txt","rt");
-    FILE* saida = fopen("saida.txt","rt");
+    FILE* saida = fopen("saida.txt","w");
 
-    double** matriz;
+    MatrizDeDistancias matriz;
 
     TipoGrafo grafo;
 

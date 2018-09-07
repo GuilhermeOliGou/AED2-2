@@ -88,24 +88,24 @@
 	<stdbool.h>
 	<float.h>
 
-1536248723 source:c:\users\casa\desktop\aed2-2\activity1\grafo_listaadj.c
+1536360492 source:c:\users\casa\desktop\aed2-2\activity1\grafo_listaadj.c
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
 	"grafo_listaadj.h"
 
-1536248724 c:\users\casa\desktop\aed2-2\activity1\grafo_listaadj.h
+1536360495 c:\users\casa\desktop\aed2-2\activity1\grafo_listaadj.h
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
 
-1536243331 source:c:\users\casa\desktop\aed2-2\activity1\heap_binario.c
+1536360491 source:c:\users\casa\desktop\aed2-2\activity1\heap_binario.c
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
 	"heap_binario.h"
 
-1536248815 c:\users\casa\desktop\aed2-2\activity1\heap_binario.h
+1536360494 c:\users\casa\desktop\aed2-2\activity1\heap_binario.h
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
@@ -140,4 +140,11 @@
 	<stdlib.h>
 	<stdbool.h>
 	"heap_binario.h"
+
+1536360732 source:c:\users\casa\desktop\aed2-2\activity1\dijkstra.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	"heap_binario.h"
+	"grafo_listaadj.h"
 
