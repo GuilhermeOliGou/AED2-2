@@ -1,3 +1,11 @@
+/*
+    Guilherme Oliveira Goularte
+    10387748
+
+    Vinícius Roque
+    9779259
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -11,8 +19,8 @@ typedef struct {
 
 bool matching [2*N], alcancaveis [2*N];
 int potencial [2*N];
-bool restantesS[2*N], restantesT[2*N];
-int verticesS [N], verticesT [N];
+bool restantesS[N], restantesT[N];
+int custoMin;
 
 void InicializaGrafo (GRAFO_BIPARTIDO* g){
     int i, j;
@@ -27,23 +35,26 @@ void InicializaGrafo (GRAFO_BIPARTIDO* g){
 void DFSTVisit (int x, GRAFO_BIPARTIDO* g, int cor[2*N], int pai[2*N], bool isS){
     cor[x] = 2;
     int i;
-    for (i = 0; i < N; i++){
-        int custo;
-        if(isS){
-            custo = (int)(g->pesos[x][i] - potencial[x] - potencial[i+N]);
+    if (isS){
+        for (i = 0; i < N; i++){
             int y = i+N;
+            int custo = (int)(g->pesos[x][i] - potencial[x] - potencial[y]);
             if(cor[y] == 1 && g->orientacao[x][i] && custo == 0){
                 pai[y] = x;
                 alcancaveis[y] = true;
                 DFSTVisit(y,g,cor,pai, false);
             }
-        }else{
-            int custo = (int)(g->pesos[i][x] - potencial[i] - potencial[x]);
-            if(cor[i] == 1 && g->orientacao[i][x] && custo == 0){
+        }
+    }else{
+        int y = x-N;
+        for (i = 0; i < N; i++){
+            int custo = (int)(g->pesos[i][y] - potencial[i] - potencial[x]);
+            if(cor[i] == 1 && g->orientacao[i][y] && custo == 0){
                 pai[i] = x;
                 alcancaveis[i] = true;
                 DFSTVisit(i,g,cor,pai,true);
             }
+
         }
     }
     cor[x] = 3;
@@ -61,12 +72,11 @@ void DFST (int x, GRAFO_BIPARTIDO* g, bool restantesT[N]){
     DFSTVisit(x,g,cor,pai,true);
 
     for (i = N; i < 2*N; i++){
-        if(pai[i] > -1){
-                    printf("%d\n",i);
+        if(pai[i] > -1 && restantesT[i-N]){
             int x1 = i;
             int x2 = pai[i];
             while (x2 > -1){
-                g->orientacao[x2][x1] = !g->orientacao[x2][x1];
+                g->orientacao[x2%10][x1%10] = !g->orientacao[x2][x1];
                 x1 = x2;
                 x2 = pai[x2];
             }
@@ -85,15 +95,11 @@ void MetodoHungaro(GRAFO_BIPARTIDO* g, FILE* saida){
     for(i = 0; i < N; i++){
         restantesS[i] = true;
         restantesT[i] = true;
-        verticesS[i] = -1;
-        verticesT[i] = -1;
     }
 
     bool matchingIncompleto = true;
-    int z = 0;
 
     while(matchingIncompleto){
-            z++;
         for (i = 0; i < N; i++){
             if (matching[i]){
                 restantesS[i] = false;
@@ -106,9 +112,9 @@ void MetodoHungaro(GRAFO_BIPARTIDO* g, FILE* saida){
         }
         for (i = N; i < 2*N; i++){
             if (matching[i])
-                restantesT[i] = false;
+                restantesT[i-N] = false;
             else
-                restantesT[i] = true;
+                restantesT[i-N] = true;
         }
 
         for (i = 0; i < N; i++){
@@ -116,19 +122,16 @@ void MetodoHungaro(GRAFO_BIPARTIDO* g, FILE* saida){
                 DFST(i,g,restantesT);
         }
 
-        int k = 0;
-        for (i = 0; i < N; i++){
+        custoMin = 0;
+        for (i = 0; i < 2*N; i++){
             matching[i] = false;
-            matching[i+N] = false;
-            verticesS[i] = -1;
-            verticesT[i] = -1;
+        }
+        for (i = 0; i < N; i++){
             for (j = 0; j < N; j++){
                 if(!g->orientacao[i][j]){
                     matching[i] = true;
-                    matching[j] = true;
-                    verticesS[k] = i;
-                    verticesT[k] = j;
-                    k++;
+                    matching[j+N] = true;
+                    custoMin += g->pesos[i][j];
                     break;
                 }
             }
@@ -158,13 +161,9 @@ void MetodoHungaro(GRAFO_BIPARTIDO* g, FILE* saida){
                 break;
             }
         }
-        matchingIncompleto = false;
     }
 
-    for (i = 0; i < N; i++){
-        //fprintf(saida, "%d --=-- %d\n",verticesS[i],verticesT[i]);
-        printf("%d --=-- %d\n",verticesS[i],verticesT[i]);
-    }
+    fprintf(saida, "%d\n",custoMin);
 }
 
 int main(int argc, char** argv){
@@ -186,3 +185,10 @@ int main(int argc, char** argv){
 
     return 0;
 }
+
+/*
+    Resultados:
+
+    a) 6
+    b) 34
+*/
